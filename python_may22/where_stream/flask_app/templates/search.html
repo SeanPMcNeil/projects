@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Where's The Stream?</title>
+        <!-- Materialize CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Materialize Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Static CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav>
+            <div class="nav-wrapper red accent-1">
+                <a href="/" class="brand-logo black-text" style="padding-left: 20px;">Where's The Stream?</a>
+                <ul id="nav-mobile" class="right" style="padding-right: 20px;">
+                    <li>
+                        <a href="/" class="waves-effect waves-light btn blue">Home</a>
+                    </li>
+                    {% if 'user_id' in session %}
+                        <li>
+                            <a href="/dashboard" class="waves-effect waves-light btn blue">Dashboard</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        {% if 'user_id' not in session %}
+                            <a href="/login" class="waves-effect waves-light btn">Login/Register</a>
+                        {% else %}
+                            <a href="/logout" class="waves-effect waves-light btn red">Logout</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Body -->
+        <div class="container">
+            <h4>Results for: <span class="blue-text">{{ query }}</span></h4>
+            
+            <div class="row">
+                {% for row in results['results'] %}
+                <div class="col s2">
+                    <a href="/{{ row['id'] }}/processing"><img src="{{ row['image_url'] }}" height="198px"></a>
+                    <!-- <p>{{ row['name'] }}</p> -->
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <!-- Materialize JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </body>
+</html>
