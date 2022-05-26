@@ -10,13 +10,13 @@
         <!-- Materialize Icons-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-    <body class="grey darken-2 grey-text text-lighten-5">
+    <body class="blue-grey darken-4 cyan-text text-lighten-5">
         <nav>
-            <div class="nav-wrapper brown lighten-5">
-                <a href="/" class="brand-logo grey-text text-darken-2" style="padding-left: 20px;">Where's The Stream?</a>
+            <div class="nav-wrapper deep-orange lighten-1">
+                <a href="/" class="brand-logo cyan-text text-lighten-5" style="padding-left: 20px;">Where's The Stream?</a>
                 <ul id="nav-mobile" class="right" style="padding-right: 20px;">
                     <li>
-                        <a href="/" class="waves-effect waves-light btn green lighten-3 grey-text text-darken-2">Home</a>
+                        <a href="/" class="waves-effect waves-light btn blue lighten-4 blue-grey-text text-darken-4">Home</a>
                     </li>
                 </ul>
             </div>
@@ -28,9 +28,9 @@
                 <!-- Registration Column -->
                 <div class="col s4 offset-s1">
 
-                    <h3 class="lime-text text-accent-2">Register</h3>
+                    <h3 class="blue-text text-darken-2">Register</h3>
                     <!-- Error Flash Messages -->
-                    <div class="row red white-text">
+                    <div class="row deep-orange lighten-1 cyan-text text-lighten-5">
                         {% with messages = get_flashed_messages(category_filter=["registration"]) %}
                             {% if messages %}
                                 <ul>
@@ -44,19 +44,19 @@
                     <!-- Registration Form -->
                     <form action="/register/user" method="POST">
 
-                        <label for="username" class="grey-text text-lighten-5">Username:</label>
-                        <input type="text" name="username" id="username" class="grey-text text-lighten-5">
+                        <label for="username" class="cyan-text text-lighten-5">Username:</label>
+                        <input type="text" name="username" id="username" class="cyan-text text-lighten-5">
 
-                        <label for="email" class="grey-text text-lighten-5">Email:</label>
-                        <input type="text" name="email" id="email" class="grey-text text-lighten-5">
+                        <label for="email" class="cyan-text text-lighten-5">Email:</label>
+                        <input type="text" name="email" id="email" class="cyan-text text-lighten-5">
 
-                        <label for="password" class="grey-text text-lighten-5">Password:</label>
-                        <input type="password" name="password" id="password" class="grey-text text-lighten-5">
+                        <label for="password" class="cyan-text text-lighten-5">Password:</label>
+                        <input type="password" name="password" id="password" class="cyan-text text-lighten-5">
 
-                        <label for="pass_confirm" class="grey-text text-lighten-5">Confirm Password:</label>
-                        <input type="password" name="confirm_password" id="confirm_password" class="grey-text text-lighten-5">
+                        <label for="pass_confirm" class="cyan-text text-lighten-5">Confirm Password:</label>
+                        <input type="password" name="confirm_password" id="confirm_password" class="cyan-text text-lighten-5">
 
-                        <button class="btn btn-large waves-effect waves-light lime accent-2 grey-text text-darken-2" type="submit" name="action" style="margin-bottom: 5px;">Register
+                        <button class="btn btn-large waves-effect waves-light blue darken-2 cyan-text text-lighten-5" type="submit" name="action" style="margin-bottom: 5px;">Register
                             <i class="material-icons right">send</i>
                         </button>
                     </form>
@@ -64,7 +64,7 @@
 
                 <!-- Login Column -->
                 <div class="col s4 offset-s1">
-                    <h3 class="green-text text-lighten-3">Login</h3>
+                    <h3 class="deep-orange-text text-lighten-1">Login</h3>
                     <!-- Error Flash Messages -->
                     <div class="row red white-text">
                         {% with messages = get_flashed_messages(category_filter=["login"]) %}
@@ -80,13 +80,13 @@
                     <!-- Login Form -->
                     <form action="/login" method="POST">
 
-                        <label for="email" class="grey-text text-lighten-5">Email:</label>
-                        <input type="text" name="email" id="email" class="grey-text text-lighten-5">
+                        <label for="email" class="cyan-text text-lighten-5">Email:</label>
+                        <input type="text" name="email" id="email" class="cyan-text text-lighten-5">
 
-                        <label for="password" class="grey-text text-lighten-5">Password:</label>
-                        <input type="password" name="password" id="password" class="grey-text text-lighten-5">
+                        <label for="password" class="cyan-text text-lighten-5">Password:</label>
+                        <input type="password" name="password" id="password" class="cyan-text text-lighten-5">
 
-                        <button class="waves-effect waves-light btn btn-large green lighten-3 grey-text text-darken-2" type="submit" name="action" style="margin-bottom: 5px;">Login
+                        <button class="waves-effect waves-light btn btn-large deep-orange lighten-1 blue-grey-text text-darken-4" type="submit" name="action" style="margin-bottom: 5px;">Login
                             <i class="material-icons right">login</i>
                         </button>
                     </form>
