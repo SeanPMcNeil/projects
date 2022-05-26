@@ -12,25 +12,21 @@
         <!-- Static CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
     </head>
-    <body>
-        <!-- Navbar -->
+    <body class="grey darken-2 grey-text text-lighten-5">
         <nav>
-            <div class="nav-wrapper red accent-1">
-                <a href="/" class="brand-logo black-text" style="padding-left: 20px;">Where's The Stream?</a>
+            <div class="nav-wrapper brown lighten-5">
+                <a href="/" class="brand-logo grey-text text-darken-2" style="padding-left: 20px;">Where's The Stream?</a>
                 <ul id="nav-mobile" class="right" style="padding-right: 20px;">
-                    <li>
-                        <a href="/" class="waves-effect waves-light btn blue">Home</a>
-                    </li>
                     {% if 'user_id' in session %}
                         <li>
-                            <a href="/dashboard" class="waves-effect waves-light btn blue">Dashboard</a>
+                            <a href="/dashboard" class="waves-effect waves-light btn green lighten-3 grey-text text-darken-2">Dashboard</a>
                         </li>
                     {% endif %}
                     <li>
                         {% if 'user_id' not in session %}
-                            <a href="/login" class="waves-effect waves-light btn">Login/Register</a>
+                            <a href="/login" class="waves-effect waves-light btn green lighten-3 grey-text text-darken-2">Login/Register</a>
                         {% else %}
-                            <a href="/logout" class="waves-effect waves-light btn red">Logout</a>
+                            <a href="/logout" class="waves-effect waves-light btn lime accent-2 grey-text text-darken-2">Logout</a>
                         {% endif %}
                     </li>
                 </ul>
@@ -39,7 +35,7 @@
 
         <!-- Main Body -->
         <div class="container">
-            <h4>Results for: <span class="blue-text">{{ query }}</span></h4>
+            <h4>Results for: <span class="green-text text-lighten-3">{{ query }}</span></h4>
             
             <div class="row">
                 {% for row in results['results'] %}

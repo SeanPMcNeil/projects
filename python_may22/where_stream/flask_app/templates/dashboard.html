@@ -12,16 +12,16 @@
         <!-- Static CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
     </head>
-    <body>
+    <body class="grey darken-2 grey-text text-lighten-5">
         <nav>
-            <div class="nav-wrapper red accent-1">
-                <a href="/" class="brand-logo black-text" style="padding-left: 20px;">Where's The Stream?</a>
+            <div class="nav-wrapper brown lighten-5">
+                <a href="/" class="brand-logo grey-text text-darken-2" style="padding-left: 20px;">Where's The Stream?</a>
                 <ul id="nav-mobile" class="right" style="padding-right: 20px;">
                     <li>
-                        <a href="/" class="waves-effect waves-light btn blue">Home</a>
+                        <a href="/" class="waves-effect waves-light btn green lighten-3 grey-text text-darken-2">Home</a>
                     </li>
                     <li>
-                        <a href="/logout" class="waves-effect waves-light btn red">Logout</a>
+                        <a href="/logout" class="btn waves-effect waves-light lime accent-2 grey-text text-darken-2">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -29,10 +29,10 @@
         <div class="container">
             <div class="row valign-wrapper">
                 <div class="col">
-                    <h3>Welcome <span class="blue-text">{{ user.username }}</span>!</h3>
+                    <h3>Welcome <span class="green-text text-lighten-3">{{ user.username }}</span>!</h3>
                 </div>
-                <div class="col offset-s4">
-                    <a href="/edituser/{{ session['user_id'] }}" class="waves-effect waves-light btn green">Edit Account</a>
+                <div class="col offset-s5">
+                    <a href="/edituser/{{ session['user_id'] }}" class="waves-effect waves-light btn green lighten-3 grey-text text-darken-2">Edit Account</a>
                 </div>
             </div>
             <div class="row">
