@@ -16,7 +16,15 @@
         <nav>
             <div class="nav-wrapper deep-orange lighten-1">
                 <a href="/" class="brand-logo cyan-text text-lighten-5" style="padding-left: 20px;">Where's The Stream?</a>
-                <ul id="nav-mobile" class="right" style="padding-right: 20px;">
+                <ul id="nav-mobile" class="right valign-margin" style="padding-right: 20px;">
+                    <li>
+                        <form action="/searching" method="POST" style="margin-right: 20px;">
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">search</i>
+                                <input type="text" name="query" class="center-align cyan-text text-lighten-5" style="box-shadow: 0 1px 0 0 cyan;">
+                            </div>
+                        </form>        
+                    </li>
                     <li>
                         <a href="/" class="waves-effect waves-light btn blue lighten-4 blue-grey-text text-darken-4">Home</a>
                     </li>

@@ -16,7 +16,15 @@
         <nav>
             <div class="nav-wrapper deep-orange lighten-1">
                 <a href="/" class="brand-logo cyan-text text-lighten-5" style="padding-left: 20px;">Where's The Stream?</a>
-                <ul id="nav-mobile" class="right" style="padding-right: 20px;">
+                <ul id="nav-mobile" class="right valign-margin" style="padding-right: 20px;">
+                    <li>
+                        <form action="/searching" method="POST" style="margin-right: 20px;">
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">search</i>
+                                <input type="text" name="query" class="center-align cyan-text text-lighten-5" style="box-shadow: 0 1px 0 0 lightgray;">
+                            </div>
+                        </form>        
+                    </li>
                     {% if 'user_id' in session %}
                         <li>
                             <a href="/dashboard" class="waves-effect waves-light btn blue lighten-4 blue-grey-text text-darken-4">Dashboard</a>
@@ -40,7 +48,7 @@
             <div class="row">
                 {% for row in results['results'] %}
                 <div class="col s2">
-                    <a href="/{{ row['id'] }}/processing"><img src="{{ row['image_url'] }}" height="198px"></a>
+                    <a href="/{{ row['id'] }}/processing"><img src="{{ row['image_url'] }}" height="198px" alt="{{ row['name'] }}"></a>
                     <!-- <p>{{ row['name'] }}</p> -->
                 </div>
                 {% endfor %}
@@ -48,6 +56,8 @@
 
         </div>
 
+        <!-- JS Static File -->
+        <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
         <!-- Materialize JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
