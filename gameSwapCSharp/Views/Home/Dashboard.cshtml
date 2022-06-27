@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="text-center">
+    <h1>Welcome, @ViewBag.LoggedUser.Username</h1>
+
+    <h4 class="text-start">Your Current Listings</h4>
+    @foreach (Game g in ViewBag.LoggedUser.OwnedGames)
+    {
+        <p><a href="/game/@g.GameId">@g.Title | @g.Platform | @g.Price</a></p>
+    }
+    <hr>
+    <div class="row justify-content-end text-end">
+        <div class="col-3">
+            <a href="/browse" class="btn btn-primary">Browse Available Games</a>
+        </div>
+        <div class="col-2">
+            <a href="/game/new" class="btn btn-success">List a New Game</a>
+        </div>
+    </div>
+    <h4 class="text-start">Your Pending Swaps</h4>
+</div>

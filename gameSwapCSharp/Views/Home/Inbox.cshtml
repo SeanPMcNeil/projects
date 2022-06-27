@@ -1,0 +1,31 @@
+@model Message
+
+<div class="text-center">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Sender</th>
+                    <th scope="col">Listing</th>
+                    <th scope="col">Sent</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Message m in ViewBag.Messages)
+                {
+                    <tr>
+                        <td>@m.Sender.Username</td>
+                        @foreach (Game g in ViewBag.RelevantGames)
+                        {
+                            if (g.GameId == m.GameId)
+                            {
+                                <td>@g.Title</td>
+                            }
+                        }
+                        <td>@m.CreatedAt</td>
+                        <td><a href="/message/@m.MessageId">Read</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>

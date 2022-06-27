@@ -1,0 +1,32 @@
+@model Game
+
+<div class="text-center">
+    <h1 class="text-start">@Model.Title</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Listed By</th>
+                <th scope="col">Platform</th>
+                <th scope="col">Quality</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Owner.Username</td>
+                <td>@Model.Platform</td>
+                <td>@Model.Quality</td>
+                <td>@Model.Price</td>
+            </tr>
+        </tbody>
+    </table>
+    @if (Model.Owner.UserId != Context.Session.GetInt32("user"))
+    {
+        <a href="/game/message/@Model.GameId" class="btn btn-primary">I'm Interested!</a>
+    }
+    else
+    {
+        <a href="/game/edit/@Model.GameId" class="btn btn-warning">Edit Listing</a>
+        <a href="/game/delete/@Model.GameId" class="btn btn-danger">Remove Listing</a>
+    }
+</div>

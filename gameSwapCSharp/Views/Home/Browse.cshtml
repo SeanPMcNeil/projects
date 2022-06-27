@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Browse";
+}
+
+<div class="text-center">
+    <h1 class="text-start">Available Listings</h1>
+    @foreach (Game g in ViewBag.AllGames)
+    {
+        <p><a href="/game/@g.GameId">@g.Title | @g.Platform | @g.Price Coins | @g.Owner.Username</a></p>
+    }
+</div>
