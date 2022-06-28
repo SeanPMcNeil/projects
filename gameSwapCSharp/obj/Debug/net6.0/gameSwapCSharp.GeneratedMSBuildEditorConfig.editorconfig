@@ -51,8 +51,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9PbmVNZXNzYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/lowkey/CodingDojo/projects/gameSwapCSharp/Views/Home/OneSwap.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9PbmVTd2FwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/lowkey/CodingDojo/projects/gameSwapCSharp/Views/Home/SwapInit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Td2FwSW5pdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/lowkey/CodingDojo/projects/gameSwapCSharp/Views/Home/UserActions.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Vc2VyQWN0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/lowkey/CodingDojo/projects/gameSwapCSharp/Views/Home/WriteReply.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Xcml0ZVJlcGx5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/lowkey/CodingDojo/projects/gameSwapCSharp/Views/Home/_Login.cshtml]

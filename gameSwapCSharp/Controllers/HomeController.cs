@@ -51,7 +51,7 @@ public class HomeController : Controller
             _context.Add(newUser);
             _context.SaveChanges();
             HttpContext.Session.SetInt32("user", newUser.UserId);
-
+            HttpContext.Session.SetString("username", newUser.Username);
             return RedirectToAction("Dashboard");
         }
         else
@@ -81,6 +81,7 @@ public class HomeController : Controller
             else
             {
                 HttpContext.Session.SetInt32("user", userInDb.UserId);
+                HttpContext.Session.SetString("username", userInDb.Username);
                 return RedirectToAction("Dashboard");
             }
         }
@@ -97,7 +98,8 @@ public class HomeController : Controller
         {
             return RedirectToAction("UserActions");
         }
-        ViewBag.LoggedUser = _context.Users.Include(g => g.OwnedGames).FirstOrDefault(a => a.UserId == (int)HttpContext.Session.GetInt32("user"));
+        ViewBag.LoggedUser = _context.Users.Include(g => g.OwnedGames).Include(s => s.OwnedSwaps).Include(b => b.BoughtSwaps).FirstOrDefault(a => a.UserId == (int)HttpContext.Session.GetInt32("user"));
+        ViewBag.RelevantSwaps = _context.Swaps.Include(b => b.Buyer).Include(s => s.Seller).Include(g=>g.Game).Where(i => i.SellerId == HttpContext.Session.GetInt32("user") || i.BuyerId == HttpContext.Session.GetInt32("user"));
         return View();
     }
 
@@ -116,6 +118,7 @@ public class HomeController : Controller
             return RedirectToAction("UserActions");
         }
         ViewBag.AllGames = _context.Games.Include(o => o.Owner).OrderBy(p => p.Platform).ToList();
+        ViewBag.AllSwaps = _context.Swaps.ToList();
         return View();
     }
 
@@ -259,7 +262,7 @@ public class HomeController : Controller
         {
             return RedirectToAction("UserActions");
         }
-        ViewBag.Messages = _context.Messages.Include(r => r.Responses).Include(s => s.Sender).Include(r => r.Recipient).Where(i => i.RecipientId == HttpContext.Session.GetInt32("user")).ToList();
+        ViewBag.Messages = _context.Messages.Include(r => r.Responses).Include(s => s.Sender).Include(r => r.Recipient).Where(i => i.RecipientId == HttpContext.Session.GetInt32("user") || i.SenderId == HttpContext.Session.GetInt32("user")).OrderByDescending(c => c.CreatedAt).ToList();
         List<Game> MessagedGames = new List<Game>();
         foreach (Message m in ViewBag.Messages)
         {
@@ -273,8 +276,95 @@ public class HomeController : Controller
     [HttpGet("message/{messageId}")]
     public IActionResult OneMessage(int messageId)
     {
-        Message oneMessage = _context.Messages.Include(s => s.Sender).Include(r => r.Responses).FirstOrDefault(m => m.MessageId == messageId);
+        if (HttpContext.Session.GetInt32("user") == null)
+        {
+            return RedirectToAction("UserActions");
+        }
+        Message oneMessage = _context.Messages.Include(s => s.Sender).Include(r => r.Recipient).Include(r => r.Responses).FirstOrDefault(m => m.MessageId == messageId);
+        ViewBag.oneGame = _context.Games.FirstOrDefault(g => g.GameId == oneMessage.GameId);
         return View(oneMessage);
+    }
+
+    [HttpGet("message/{messageId}/reply")]
+    public IActionResult WriteReply(int messageId)
+    {
+        if (HttpContext.Session.GetInt32("user") == null)
+        {
+            return RedirectToAction("UserActions");
+        }
+        ViewBag.ParentMessage = _context.Messages.Include(s => s.Sender).FirstOrDefault(m => m.MessageId == messageId);
+        return View();
+    }
+
+    [HttpPost("message/{messageId}/reply/send")]
+    public IActionResult SendReply(int messageId, Response newResponse)
+    {
+        newResponse.MessageId = messageId;
+        newResponse.UserId = (int)HttpContext.Session.GetInt32("user");
+        if (ModelState.IsValid)
+        {
+            _context.Add(newResponse);
+            _context.SaveChanges();
+            return RedirectToAction("Dashboard");
+        }
+        else
+        {
+            ViewBag.ParentMessage = _context.Messages.Include(s => s.Sender).FirstOrDefault(m => m.MessageId == messageId);
+            return View("WriteReply");
+        }
+    }
+
+    [HttpGet("swap/{buyerId}/{sellerId}/{gameId}/{finalPrice}")]
+    public IActionResult SwapInit (int buyerId, int sellerId, int gameId, int finalPrice)
+    {
+        if (HttpContext.Session.GetInt32("user") == null)
+        {
+            return RedirectToAction("UserActions");
+        }
+        Swap tempSwap = new Swap();
+        tempSwap.BuyerId = buyerId;
+        tempSwap.Buyer = _context.Users.FirstOrDefault(u => u.UserId == buyerId);
+        tempSwap.SellerId = sellerId;
+        tempSwap.Seller = _context.Users.FirstOrDefault(u => u.UserId == sellerId);
+        tempSwap.GameId = gameId;
+        tempSwap.Game = _context.Games.FirstOrDefault(g => g.GameId == gameId);
+        tempSwap.FinalPrice = finalPrice;
+        tempSwap.TrackingInfo = "";
+        return View(tempSwap);
+    }
+
+    [HttpPost("swap/initialize")]
+    public IActionResult AddSwap(Swap newSwap)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Add(newSwap);
+            _context.SaveChanges();
+            return RedirectToAction("Dashboard");
+        }
+        else
+        {
+            newSwap.Buyer = _context.Users.FirstOrDefault(u => u.UserId == newSwap.BuyerId);
+            newSwap.Seller = _context.Users.FirstOrDefault(u => u.UserId == newSwap.SellerId);
+            newSwap.Game = _context.Games.FirstOrDefault(g => g.GameId == newSwap.GameId);
+            return View("SwapInit", newSwap);
+        }
+    }
+
+    [HttpGet("swap/view/{swapId}")]
+    public IActionResult OneSwap(int swapId)
+    {
+        Swap oneSwap = _context.Swaps.Include(s => s.Seller).Include(b => b.Buyer).Include(g => g.Game).FirstOrDefault(s => s.SwapId == swapId);
+        return View(oneSwap);
+    }
+
+    [HttpPost("swap/finalize/{swapId}")]
+    public IActionResult EndSwap(int swapId)
+    {
+        Swap swapToRemove = _context.Swaps.SingleOrDefault(s => s.SwapId == swapId);
+        _context.Remove(swapToRemove);
+        _context.SaveChanges();
+        return RedirectToAction("Dashboard");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

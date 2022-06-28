@@ -11,7 +11,8 @@ public class Swap
     [Required]
     public int FinalPrice {get;set;}
 
-    public string TrackingInfo {get;set;} = "Awaiting Tracking #";
+    [Required]
+    public string TrackingInfo {get;set;}
 
     [Required]
     public int BuyerId {get;set;}
@@ -22,7 +23,7 @@ public class Swap
     public User? Seller {get;set;}
 
     public int GameId {get;set;}
-    public Game Game {get;set;}
+    public Game? Game {get;set;}
 
     public DateTime CreatedAt {get;set;} = DateTime.Now;
     public DateTime UpdatedAt {get;set;} = DateTime.Now;

@@ -1,11 +1,20 @@
 @{
     ViewData["Title"] = "Browse";
 }
-
+@{
+    List<int> SwapIds = new List<int>();
+    foreach (Swap s in ViewBag.AllSwaps)
+    {
+        SwapIds.Add(s.GameId);
+    }
+}
 <div class="text-center">
     <h1 class="text-start">Available Listings</h1>
     @foreach (Game g in ViewBag.AllGames)
     {
-        <p><a href="/game/@g.GameId">@g.Title | @g.Platform | @g.Price Coins | @g.Owner.Username</a></p>
+        if(!SwapIds.Contains(g.GameId))
+        {
+            <p><a href="/game/@g.GameId">@g.Title | @g.Platform | @g.Price Coins | @g.Owner.Username</a></p>
+        }
     }
 </div>

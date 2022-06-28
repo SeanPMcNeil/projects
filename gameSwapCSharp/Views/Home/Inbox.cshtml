@@ -4,9 +4,9 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Sender</th>
+                    <th scope="col">Last Sender</th>
                     <th scope="col">Listing</th>
-                    <th scope="col">Sent</th>
+                    <th scope="col">Latest Message</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -14,15 +14,61 @@
                 @foreach (Message m in ViewBag.Messages)
                 {
                     <tr>
-                        <td>@m.Sender.Username</td>
+                        @if (m.Responses.Count < 1)
+                        {
+                            if (m.SenderId != Context.Session.GetInt32("user"))
+                            {
+                                <td>@m.Sender.Username</td>
+                            }
+                            else
+                            {
+                                <td>You</td>
+                            }
+                        }
+                        else
+                        {
+                            int? latestResponder = null;
+                            foreach (Response r in m.Responses)
+                            {
+                                latestResponder = r.UserId;
+                            }
+                            
+                            if (latestResponder != Context.Session.GetInt32("user"))
+                            {
+                                <td>@m.Sender.Username</td>
+                            }
+                            else
+                            {
+                                <td>@m.Recipient.Username</td>
+                            }
+                        }
                         @foreach (Game g in ViewBag.RelevantGames)
                         {
                             if (g.GameId == m.GameId)
                             {
-                                <td>@g.Title</td>
+                                if (g.UserId != Context.Session.GetInt32("user"))
+                                {
+                                    <td>@g.Title</td>
+                                }
+                                else
+                                {
+                                    <td>@g.Title <span class="text-info">(Your Listing)</span></td>
+                                }
                             }
                         }
-                        <td>@m.CreatedAt</td>
+                        @if (m.Responses.Count < 1)
+                        {
+                            <td>@m.CreatedAt</td>
+                        }
+                        else
+                        {
+                            DateTime latestResponse = new DateTime();
+                            foreach (Response r in m.Responses)
+                            {
+                                latestResponse = r.CreatedAt;
+                            }
+                            <td>@latestResponse</td>
+                        }
                         <td><a href="/message/@m.MessageId">Read</a></td>
                     </tr>
                 }
