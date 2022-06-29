@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using GiantBomb.Api;
 using gameSwapCSharp.Models;
 
 namespace gameSwapCSharp.Controllers;
@@ -11,11 +12,12 @@ public class HomeController : Controller
 {
     private MyContext _context;
     private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger, MyContext context)
+    private readonly IConfiguration _config;
+    public HomeController(ILogger<HomeController> logger, MyContext context, IConfiguration config)
     {
         _logger = logger;
         _context = context;
+        _config = config;
     }
 
     [HttpGet("")]
@@ -91,6 +93,15 @@ public class HomeController : Controller
         }
     }
 
+    [HttpPost("user/addcoins")]
+    public IActionResult AddCoins()
+    {
+        User loggedInUser = _context.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("user"));
+        loggedInUser.Coins += 10;
+        _context.SaveChanges();
+        return RedirectToAction("Dashboard");
+    }
+
     [HttpGet("dashboard")]
     public IActionResult Dashboard()
     {
@@ -100,6 +111,7 @@ public class HomeController : Controller
         }
         ViewBag.LoggedUser = _context.Users.Include(g => g.OwnedGames).Include(s => s.OwnedSwaps).Include(b => b.BoughtSwaps).FirstOrDefault(a => a.UserId == (int)HttpContext.Session.GetInt32("user"));
         ViewBag.RelevantSwaps = _context.Swaps.Include(b => b.Buyer).Include(s => s.Seller).Include(g=>g.Game).Where(i => i.SellerId == HttpContext.Session.GetInt32("user") || i.BuyerId == HttpContext.Session.GetInt32("user"));
+        ViewBag.gbApi = _config["GiantBomb:ApiKey"];
         return View();
     }
 
@@ -117,7 +129,7 @@ public class HomeController : Controller
         {
             return RedirectToAction("UserActions");
         }
-        ViewBag.AllGames = _context.Games.Include(o => o.Owner).OrderBy(p => p.Platform).ToList();
+        ViewBag.AllGames = _context.Games.Include(o => o.Owner).OrderBy(c => c.CreatedAt).ToList();
         ViewBag.AllSwaps = _context.Swaps.ToList();
         return View();
     }
@@ -240,6 +252,12 @@ public class HomeController : Controller
     {
         Game requestedGame = _context.Games.Include(o => o.Owner).FirstOrDefault(g => g.GameId == gameId);
         User buyer = _context.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("user"));
+        if (buyer.Coins < newMessage.ProposedPrice)
+        {
+            ModelState.AddModelError("ProposedPrice", "Not Enough Coins, Please Obtain More");
+            ViewBag.SingleGame = _context.Games.Include(o => o.Owner).SingleOrDefault(g => g.GameId == gameId);
+            return View("Message");
+        }
         newMessage.SenderId = buyer.UserId;
         newMessage.RecipientId = requestedGame.Owner.UserId;
         newMessage.GameId = requestedGame.GameId;
@@ -251,6 +269,7 @@ public class HomeController : Controller
         }
         else
         {
+            ViewBag.SingleGame = _context.Games.Include(o => o.Owner).SingleOrDefault(g => g.GameId == gameId);
             return View("Message");
         }
     }
@@ -282,6 +301,32 @@ public class HomeController : Controller
         }
         Message oneMessage = _context.Messages.Include(s => s.Sender).Include(r => r.Recipient).Include(r => r.Responses).FirstOrDefault(m => m.MessageId == messageId);
         ViewBag.oneGame = _context.Games.FirstOrDefault(g => g.GameId == oneMessage.GameId);
+        List<Swap> allSwaps = _context.Swaps.Where(s => s.SellerId == oneMessage.RecipientId && s.BuyerId == oneMessage.SenderId && s.GameId == oneMessage.GameId).ToList();
+        if (allSwaps.Count < 1)
+        {
+            ViewBag.AlreadyTraded = 0;
+        }
+        else
+        {
+            foreach (Swap s in allSwaps)
+            {
+                if (s.SellerId == oneMessage.RecipientId && s.BuyerId == oneMessage.SenderId && s.GameId == ViewBag.oneGame.GameId && s.GameReceived == 1)
+                {
+                    ViewBag.AlreadyTraded = 1;
+                    break;
+                }
+                else if (s.SellerId == oneMessage.RecipientId && s.BuyerId == oneMessage.SenderId && s.GameId == ViewBag.oneGame.GameId && s.GameReceived == 2)
+                {
+                    ViewBag.AlreadyTraded = 2;
+                    break;
+                }
+                else
+                {
+                    ViewBag.AlreadyTraded = 0;
+                    break;
+                }
+            }
+        }
         return View(oneMessage);
     }
 
@@ -338,6 +383,17 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid)
         {
+            User buyer = _context.Users.FirstOrDefault(u => u.UserId == newSwap.BuyerId);
+            if (buyer.Coins < newSwap.FinalPrice)
+            {
+                ModelState.AddModelError("TrackingInfo", "Buyer does not have enough coins for swap");
+                newSwap.Buyer = _context.Users.FirstOrDefault(u => u.UserId == newSwap.BuyerId);
+                newSwap.Seller = _context.Users.FirstOrDefault(u => u.UserId == newSwap.SellerId);
+                newSwap.Game = _context.Games.FirstOrDefault(g => g.GameId == newSwap.GameId);
+                return View("SwapInit", newSwap);
+            }
+            newSwap.GameReceived = 2;
+            buyer.Coins -= newSwap.FinalPrice;
             _context.Add(newSwap);
             _context.SaveChanges();
             return RedirectToAction("Dashboard");
@@ -361,8 +417,10 @@ public class HomeController : Controller
     [HttpPost("swap/finalize/{swapId}")]
     public IActionResult EndSwap(int swapId)
     {
-        Swap swapToRemove = _context.Swaps.SingleOrDefault(s => s.SwapId == swapId);
-        _context.Remove(swapToRemove);
+        Swap swapToFinalize = _context.Swaps.SingleOrDefault(s => s.SwapId == swapId);
+        User seller = _context.Users.FirstOrDefault(u => u.UserId == swapToFinalize.SellerId);
+        seller.Coins += swapToFinalize.FinalPrice;
+        swapToFinalize.GameReceived = 1;
         _context.SaveChanges();
         return RedirectToAction("Dashboard");
     }
@@ -373,3 +431,4 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
+

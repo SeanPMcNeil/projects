@@ -1,3 +1,6 @@
+@{
+    ViewData["Title"] = "View a Message";
+}
 @model Message
 
 <div class="text-center">
@@ -54,11 +57,25 @@
     }
     @if (latestSender != Context.Session.GetInt32("user"))
     {
-        <a href="/message/@Model.MessageId/reply" class="btn btn-info">Reply</a>
+        if (ViewBag.AlreadyTraded < 1)
+        {
+            <a href="/message/@Model.MessageId/reply" class="btn btn-info">Reply</a>
+        }
     }
     <hr>
     @if (Model.RecipientId == Context.Session.GetInt32("user") && latestSender != Context.Session.GetInt32("user"))
     {
-        <a href="/swap/@Model.SenderId/@Model.RecipientId/@Model.GameId/@latestPrice" class="btn btn-lg btn-success">Accept at @latestPrice Coins</a>
+        if (ViewBag.AlreadyTraded == 0)
+        {
+            <a href="/swap/@Model.SenderId/@Model.RecipientId/@Model.GameId/@latestPrice" class="btn btn-lg btn-success">Accept at @latestPrice Coins</a>
+        }
+    }
+    @if (ViewBag.AlreadyTraded == 2)
+    {
+        <h5>Swap in Progress!</h5>
+    }
+    else if (ViewBag.AlreadyTraded == 1)
+    {
+        <h5>Swap Completed!</h5>
     }
 </div>

@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
+@using GiantBomb.Api;
 @{
     List<int> SwapIds = new List<int>();
     foreach (Swap s in ViewBag.RelevantSwaps)
@@ -9,16 +10,37 @@
     }
 }
 <div class="text-center">
-    <h1>Welcome, @ViewBag.LoggedUser.Username</h1>
+    <div class="row">
+        <div class="col-10 offset-1">
+            <h1>Welcome, @ViewBag.LoggedUser.Username</h1>
+        </div>
+        <div class="col-1">
+            <form action="/user/addcoins" method="post">
+                <input type="submit" value="Add 10 Coins" class="btn btn-info">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <h5>Current Coins: @ViewBag.LoggedUser.Coins</h5>
+    </div>
 
     <h4 class="text-start">Your Current Listings</h4>
-    @foreach (Game g in ViewBag.LoggedUser.OwnedGames)
-    {
-        if (!SwapIds.Contains(g.GameId))
+    <div class="row">
+        @foreach (Game g in ViewBag.LoggedUser.OwnedGames)
         {
-            <p><a href="/game/@g.GameId">@g.Title | @g.Platform | @g.Price</a></p>
+            if (!SwapIds.Contains(g.GameId))
+            {
+                var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
+                var filters = new Dictionary<string, object>() {
+                    {"name", g.Title}
+                };
+                Console.WriteLine(giantBomb.SearchForAllGamesAsync(g.Title));
+                <div class="col">
+                    <p><a href="/game/@g.GameId">@g.Title | @g.Platform | @g.Price</a></p>
+                </div>
+            }
         }
-    }
+    </div>
     <hr>
     <div class="row justify-content-end text-end">
         <div class="col-3">
@@ -31,15 +53,9 @@
     <h4 class="text-start">Your Pending Swaps</h4>
     @foreach (Swap s in ViewBag.RelevantSwaps)
     {
-        <p><a href="/swap/view/@s.SwapId">@s.Game.Title | Swapped to: @s.Buyer.Username From: @s.Seller.Username | Price: @s.FinalPrice</a></p>
-    }
-    <hr>
-    @foreach (Swap s in ViewBag.LoggedUser.OwnedSwaps)
-    {
-        <p>Owned: @s.GameId</p>
-    }
-    @foreach (Swap s in ViewBag.LoggedUser.BoughtSwaps)
-    {
-        <p>Bought: @s.GameId</p>
+        if (s.GameReceived != 1)
+        {
+            <p><a href="/swap/view/@s.SwapId">@s.Game.Title | Swapped to: @s.Buyer.Username From: @s.Seller.Username | Price: @s.FinalPrice</a></p>
+        }
     }
 </div>

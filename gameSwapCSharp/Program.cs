@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using gameSwapCSharp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var gbApiKey = builder.Configuration["GiantBomb:ApiKey"];
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

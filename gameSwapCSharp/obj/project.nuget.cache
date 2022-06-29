@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "xayc3P8cFQGmA84BKYeKJsJH12fOJwYumsNyelAs3PjNfSA7jv+/OJAw2cab/MvYVUzNJw+qq9Hs9xhfxU4ezg==",
+  "dgSpecHash": "kTo6X+pTY/rNXhRT015yd+ByuqOrK/nijW5+7saP7FFI6ckknT/FrfHTQqNI+BiM3dNTr6v8PEoyzEw3KzBdAw==",
   "success": true,
   "projectFilePath": "/Users/lowkey/CodingDojo/projects/gameSwapCSharp/gameSwapCSharp.csproj",
   "expectedPackageFiles": [
+    "/Users/lowkey/.nuget/packages/giantbomb.api/3.0.0/giantbomb.api.3.0.0.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/microsoft.entityframeworkcore/6.0.3/microsoft.entityframeworkcore.6.0.3.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/microsoft.entityframeworkcore.abstractions/6.0.3/microsoft.entityframeworkcore.abstractions.6.0.3.nupkg.sha512",
@@ -21,6 +22,7 @@
     "/Users/lowkey/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/mysqlconnector/2.1.2/mysqlconnector.2.1.2.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/pomelo.entityframeworkcore.mysql/6.0.1/pomelo.entityframeworkcore.mysql.6.0.1.nupkg.sha512",
+    "/Users/lowkey/.nuget/packages/restsharp/107.1.1/restsharp.107.1.1.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/system.collections.immutable/6.0.0/system.collections.immutable.6.0.0.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/system.diagnostics.diagnosticsource/6.0.0/system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"

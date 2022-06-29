@@ -12,7 +12,7 @@
     <h1 class="text-start">Available Listings</h1>
     @foreach (Game g in ViewBag.AllGames)
     {
-        if(!SwapIds.Contains(g.GameId))
+        if(!SwapIds.Contains(g.GameId) && g.UserId != Context.Session.GetInt32("user"))
         {
             <p><a href="/game/@g.GameId">@g.Title | @g.Platform | @g.Price Coins | @g.Owner.Username</a></p>
         }

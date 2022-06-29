@@ -8,11 +8,23 @@
     ".NETCoreApp,Version=v6.0": {
       "gameSwapCSharp/1.0.0": {
         "dependencies": {
+          "GiantBomb.Api": "3.0.0",
           "Microsoft.EntityFrameworkCore.Design": "6.0.3",
           "Pomelo.EntityFrameworkCore.MySql": "6.0.1"
         },
         "runtime": {
           "gameSwapCSharp.dll": {}
+        }
+      },
+      "GiantBomb.Api/3.0.0": {
+        "dependencies": {
+          "RestSharp": "107.1.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/GiantBomb.Api.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -147,6 +159,14 @@
           }
         }
       },
+      "RestSharp/107.1.1": {
+        "runtime": {
+          "lib/net6.0/RestSharp.dll": {
+            "assemblyVersion": "107.1.1.0",
+            "fileVersion": "107.1.1.0"
+          }
+        }
+      },
       "System.Collections.Immutable/6.0.0": {
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -165,6 +185,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "GiantBomb.Api/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GxEV/0NeOl85ty1S3s/yZPnYpmUq3lcF+eg1Excn89mlqFrlb8AVDFC9xqOaVOYOhvD2CXus0ub5Z+sblXJIuA==",
+      "path": "giantbomb.api/3.0.0",
+      "hashPath": "giantbomb.api.3.0.0.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",
@@ -284,6 +311,13 @@
       "sha512": "sha512-sFIo5e9RmQoCTEvH6EeSV8ptmX3dw/6XgyD8R93X/i7A9+XCeG9KTjSNjrszVjVOtCu/eyvYqqcv2uZ/BHhlYA==",
       "path": "pomelo.entityframeworkcore.mysql/6.0.1",
       "hashPath": "pomelo.entityframeworkcore.mysql.6.0.1.nupkg.sha512"
+    },
+    "RestSharp/107.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-G0mvuInFUDwqTgWQ3h9R+axR6GW3Kwvv72QdgDjU4iWYxr9KDo3G1+c2+QVd0D9pBuOrKFLYras7VD7O+ViI6A==",
+      "path": "restsharp/107.1.1",
+      "hashPath": "restsharp.107.1.1.nupkg.sha512"
     },
     "System.Collections.Immutable/6.0.0": {
       "type": "package",

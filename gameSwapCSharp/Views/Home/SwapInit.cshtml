@@ -1,3 +1,6 @@
+@{
+    ViewData["Title"] = "Start a Swap";
+}
 @model Swap
 
 <div class="text-center">
@@ -7,6 +10,7 @@
         <div class="col">
             <p>Listing Owner: @Model.Seller.Username</p>
             <p>Buyer: @Model.Buyer.Username</p>
+            <p>Buyer Address: @Model.Buyer.Address</p>
         </div>
         <div class="col">
             <p>Game: @Model.Game.Title</p>
