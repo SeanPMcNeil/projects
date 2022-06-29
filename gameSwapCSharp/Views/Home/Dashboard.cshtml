@@ -1,7 +1,8 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-@using GiantBomb.Api;
+@using GiantBomb.Api
+@using System.Text.Json
 @{
     List<int> SwapIds = new List<int>();
     foreach (Swap s in ViewBag.RelevantSwaps)
@@ -34,10 +35,13 @@
                 var filters = new Dictionary<string, object>() {
                     {"name", g.Title}
                 };
-                Console.WriteLine(giantBomb.SearchForAllGamesAsync(g.Title));
+                var results = giantBomb.SearchForGamesAsync(g.Title);
+                string jsonString = JsonSerializer.Serialize(results);
+                Console.WriteLine(jsonString);
                 <div class="col">
                     <p><a href="/game/@g.GameId">@g.Title | @g.Platform | @g.Price</a></p>
                 </div>
+                break;
             }
         }
     </div>
