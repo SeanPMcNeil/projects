@@ -35,3 +35,4 @@
 /Users/lowkey/CodingDojo/projects/gameSwapCSharp/obj/Debug/net6.0/ref/gameSwapCSharp.dll
 /Users/lowkey/CodingDojo/projects/gameSwapCSharp/bin/Debug/net6.0/GiantBomb.Api.dll
 /Users/lowkey/CodingDojo/projects/gameSwapCSharp/bin/Debug/net6.0/RestSharp.dll
+/Users/lowkey/CodingDojo/projects/gameSwapCSharp/bin/Debug/net6.0/Newtonsoft.Json.dll

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kTo6X+pTY/rNXhRT015yd+ByuqOrK/nijW5+7saP7FFI6ckknT/FrfHTQqNI+BiM3dNTr6v8PEoyzEw3KzBdAw==",
+  "dgSpecHash": "NWMCZCoU0fCEG4GGo/2m+SYgwT9vbZ6pfwX+ocd4wzOIk0Ck/Ziiv9djUS1oJ38qsnDgZVul85j4pRgbXip3kQ==",
   "success": true,
   "projectFilePath": "/Users/lowkey/CodingDojo/projects/gameSwapCSharp/gameSwapCSharp.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,7 @@
     "/Users/lowkey/.nuget/packages/microsoft.extensions.options/6.0.0/microsoft.extensions.options.6.0.0.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/mysqlconnector/2.1.2/mysqlconnector.2.1.2.nupkg.sha512",
+    "/Users/lowkey/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/pomelo.entityframeworkcore.mysql/6.0.1/pomelo.entityframeworkcore.mysql.6.0.1.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/restsharp/107.1.1/restsharp.107.1.1.nupkg.sha512",
     "/Users/lowkey/.nuget/packages/system.collections.immutable/6.0.0/system.collections.immutable.6.0.0.nupkg.sha512",

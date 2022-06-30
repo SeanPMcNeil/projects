@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using GiantBomb.Api;
 using gameSwapCSharp.Models;
 
 namespace gameSwapCSharp.Controllers;
@@ -131,6 +130,7 @@ public class HomeController : Controller
         }
         ViewBag.AllGames = _context.Games.Include(o => o.Owner).OrderBy(c => c.CreatedAt).ToList();
         ViewBag.AllSwaps = _context.Swaps.ToList();
+        ViewBag.gbApi = _config["GiantBomb:ApiKey"];
         return View();
     }
 
@@ -175,6 +175,7 @@ public class HomeController : Controller
             return RedirectToAction("UserActions");
         }
         Game singleGame = _context.Games.Include(o => o.Owner).SingleOrDefault(g => g.GameId == gameId);
+        ViewBag.gbApi = _config["GiantBomb:ApiKey"];
         return View(singleGame);
     }
 

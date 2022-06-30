@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GameSwap</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -22,22 +22,22 @@
                         @if (Context.Session.GetInt32("user") == null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserActions">Login/Register</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="UserActions">Login/Register</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Inbox">Inbox</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Inbox">Inbox</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark">Welcome, @Context.Session.GetString("username")</a>
+                                <a class="nav-link">Welcome, @Context.Session.GetString("username")</a>
                             </li>
                         }
                     </ul>
@@ -53,7 +53,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - GameSwap
+            &copy; 2022 - GameSwap | Game Images Provided By <a href="https://www.giantbomb.com/">GiantBomb</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
