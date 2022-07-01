@@ -46,7 +46,7 @@
                 JsonElement root = doc.RootElement;
                 var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl");
 
-                <div class="col-3">
+                <div class="col-3 mt-2">
                     <div class="card bg-info" style="max-width: 12rem;">
                         <p class="card-title">@g.Title</p>
                         <img class="card-img" src="@u1" alt="@g.Title Cover Image" style="max-height: 225px;">
@@ -83,7 +83,7 @@
                 JsonElement root = doc.RootElement;
                 var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl");
 
-                <div class="col-3">
+                <div class="col-3 mt-2">
                     <div class="card bg-success" style="max-width: 12rem;">
                         <p class="card-title">@s.Game.Title</p>
                         <p class="card-text">Swapped to: @s.Buyer.Username From: @s.Seller.Username</p>
