@@ -49,10 +49,12 @@
                                 if (g.UserId != Context.Session.GetInt32("user"))
                                 {
                                     <td>@g.Title</td>
+                                    break;
                                 }
                                 else
                                 {
                                     <td>@g.Title <span class="text-info">(Your Listing)</span></td>
+                                    break;
                                 }
                             }
                         }
