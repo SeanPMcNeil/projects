@@ -66,30 +66,32 @@
         </div>
     </div>
     <h4 class="text-start">Your Pending Swaps</h4>
-    @foreach (Swap s in ViewBag.RelevantSwaps)
-    {
-        if (s.GameReceived != 1)
+    <div class="row">
+        @foreach (Swap s in ViewBag.RelevantSwaps)
         {
-            var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
-            string[] filters = new String[3] {
-                "id",
-                "name",
-                "image"
-            };
-            var results = giantBomb.SearchForGames(query: s.Game.Title, limitFields: filters, pageSize: 1);
-            string json = JsonSerializer.Serialize(results);
-            using JsonDocument doc = JsonDocument.Parse(json);
-            JsonElement root = doc.RootElement;
-            var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl");
+            if (s.GameReceived != 1)
+            {
+                var giantBomb = new GiantBombRestClient($"{ViewBag.gbApi}");
+                string[] filters = new String[3] {
+                    "id",
+                    "name",
+                    "image"
+                };
+                var results = giantBomb.SearchForGames(query: s.Game.Title, limitFields: filters, pageSize: 1);
+                string json = JsonSerializer.Serialize(results);
+                using JsonDocument doc = JsonDocument.Parse(json);
+                JsonElement root = doc.RootElement;
+                var u1 = root[0].GetProperty("Image").GetProperty("SmallUrl");
 
-            <div class="col-3">
-                <div class="card bg-success" style="max-width: 12rem;">
-                    <p class="card-title">@s.Game.Title</p>
-                    <p class="card-text">Swapped to: @s.Buyer.Username From: @s.Seller.Username</p>
-                    <img class="card-img" src="@u1" alt="@s.Game.Title Cover Image" style="max-height: 225px;">
-                    <p><a href="/swap/view/@s.SwapId" class="card-text stretched-link text-white">Price: @s.FinalPrice</a></p>
+                <div class="col-3">
+                    <div class="card bg-success" style="max-width: 12rem;">
+                        <p class="card-title">@s.Game.Title</p>
+                        <p class="card-text">Swapped to: @s.Buyer.Username From: @s.Seller.Username</p>
+                        <img class="card-img" src="@u1" alt="@s.Game.Title Cover Image" style="max-height: 225px;">
+                        <p><a href="/swap/view/@s.SwapId" class="card-text stretched-link text-white">Price: @s.FinalPrice</a></p>
+                    </div>
                 </div>
-            </div>
+            }
         }
-    }
+    </div>
 </div>
